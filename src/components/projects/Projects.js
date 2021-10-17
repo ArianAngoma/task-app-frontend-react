@@ -1,5 +1,6 @@
 /* Importaciones propias */
 import {Sidebar} from '../layout/Sidebar';
+import {Bar} from '../layout/Bar';
 
 export const Projects = () => {
     return (
@@ -7,6 +8,8 @@ export const Projects = () => {
             <Sidebar/>
 
             <div className="main-section">
+                <Bar/>
+
                 <main>
                     <div className="container-tasks">
 
