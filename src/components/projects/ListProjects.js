@@ -1,4 +1,4 @@
-import {useContext} from 'react';
+import {useContext, useEffect} from 'react';
 
 /* Importaciones propias */
 import {ProjectItem} from './ProjectItem';
@@ -6,7 +6,13 @@ import {projectContext} from '../../context/projects/projectContext';
 
 export const ListProjects = () => {
     /* Obtener proyectos del state inicial */
-    const {projects} = useContext(projectContext);
+    const {projects, getProjects} = useContext(projectContext);
+
+    /* Cargar proyectos cuando cargue el componente */
+    useEffect(() => {
+        getProjects();
+        // eslint-disable-next-line
+    }, []);
 
     /* Validar si proyectos tiene contenido */
     if (projects.length === 0) return null;

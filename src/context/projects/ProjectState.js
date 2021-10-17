@@ -3,7 +3,7 @@ import {useReducer} from 'react';
 /* Importaciones propias */
 import {projectReducer} from './projectReducer';
 import {projectContext} from './projectContext';
-import {FORM_PROJECT} from '../../types';
+import {FORM_PROJECT, GET_PROJECTS} from '../../types';
 
 /* State inicial */
 const initialState = {
@@ -26,12 +26,21 @@ export const ProjectState = (props) => {
         });
     }
 
+    /* Obtener proyectos */
+    const getProjects = () => {
+        dispatch({
+            type: GET_PROJECTS,
+            payload: initialState.projects
+        });
+    }
+
     return (
         <projectContext.Provider value={
             {
                 form: project.form,
                 projects: project.projects,
-                showForm
+                showForm,
+                getProjects
             }
         }>
             {props.children}
