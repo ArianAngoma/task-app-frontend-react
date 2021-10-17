@@ -1,6 +1,7 @@
 /* Importaciones propias */
 import {Sidebar} from '../layout/Sidebar';
 import {Bar} from '../layout/Bar';
+import {FormTask} from '../tasks/FormTask';
 
 export const Projects = () => {
     return (
@@ -11,6 +12,8 @@ export const Projects = () => {
                 <Bar/>
 
                 <main>
+                    <FormTask/>
+
                     <div className="container-tasks">
 
                     </div>
