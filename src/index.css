@@ -404,3 +404,11 @@ aside {
     background-color: rgb(230, 78, 78);
     color: var(--blanco);
 }
+
+.btn-delete {
+    background-color: var(--blanco);
+}
+
+.btn-delete:hover {
+    background-color: var(--gris2);
+}

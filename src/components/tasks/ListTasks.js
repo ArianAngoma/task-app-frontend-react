@@ -21,6 +21,11 @@ export const ListTasks = () => {
                         )))
                 }
             </ul>
+
+            <button type="button"
+                    className="btn btn-delete">
+                Eliminar Proyecto &times;
+            </button>
         </>
     )
 }
