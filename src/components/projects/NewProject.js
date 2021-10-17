@@ -6,7 +6,7 @@ import {projectContext} from '../../context/projects/projectContext';
 export const NewProject = () => {
     /* Obtener state del formulario */
     const projectsContext = useContext(projectContext);
-    const {form, showForm} = projectsContext;
+    const {form, showForm, addNewProject} = projectsContext;
 
     const [project, setProject] = useState({
         name: ''
@@ -24,6 +24,15 @@ export const NewProject = () => {
     /* Enviar formulario */
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        /* Validar proyecto */
+        if (name === '') return;
+
+        /* Agregar proyecto al state */
+        addNewProject(project);
+
+        /* Limpiar formulario */
+        setProject({name: ''})
     }
 
     /* Mostrar formulario */

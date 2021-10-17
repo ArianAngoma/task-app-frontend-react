@@ -1,9 +1,10 @@
 import {useReducer} from 'react';
+import {v4 as uuidv4} from 'uuid';
 
 /* Importaciones propias */
 import {projectReducer} from './projectReducer';
 import {projectContext} from './projectContext';
-import {FORM_PROJECT, GET_PROJECTS} from '../../types';
+import {ADD_PROJECT, FORM_PROJECT, GET_PROJECTS} from '../../types';
 
 /* State inicial */
 const initialState = {
@@ -34,13 +35,25 @@ export const ProjectState = (props) => {
         });
     }
 
+    /* Agregar nuevo proyecto */
+    const addNewProject = (project) => {
+        project.id = uuidv4();
+
+        /* Insertar proyecto al state */
+        dispatch({
+            type: ADD_PROJECT,
+            payload: project
+        })
+    }
+
     return (
         <projectContext.Provider value={
             {
                 form: project.form,
                 projects: project.projects,
                 showForm,
-                getProjects
+                getProjects,
+                addNewProject
             }
         }>
             {props.children}
