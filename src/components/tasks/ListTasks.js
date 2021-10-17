@@ -7,7 +7,7 @@ import {projectContext} from '../../context/projects/projectContext';
 
 export const ListTasks = () => {
     /* Obtener el state de proyecto */
-    const {project} = useContext(projectContext);
+    const {project, deleteProject} = useContext(projectContext);
 
     /* Valida si no hay un proycto activo */
     if (!project) return <h2>Selecciona un proyecto</h2>;
@@ -17,6 +17,11 @@ export const ListTasks = () => {
         {name: 'Cambiar cololres', state: true},
         {name: 'Formas de pago', state: false}
     ];
+
+    /* Eliminar proyecto */
+    const handleDeleteProject = () => {
+        deleteProject(project.id);
+    }
 
     return (
         <>
@@ -33,7 +38,8 @@ export const ListTasks = () => {
             </ul>
 
             <button type="button"
-                    className="btn btn-delete">
+                    className="btn btn-delete"
+                    onClick={handleDeleteProject}>
                 Eliminar Proyecto &times;
             </button>
         </>

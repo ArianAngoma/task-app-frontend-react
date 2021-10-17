@@ -4,7 +4,7 @@ import {v4 as uuidv4} from 'uuid';
 /* Importaciones propias */
 import {projectReducer} from './projectReducer';
 import {projectContext} from './projectContext';
-import {ACTUAL_PROJECT, ADD_PROJECT, FORM_PROJECT, GET_PROJECTS, VALIDATE_FORM} from '../../types';
+import {ACTUAL_PROJECT, ADD_PROJECT, DELETE_PROJECT, FORM_PROJECT, GET_PROJECTS, VALIDATE_FORM} from '../../types';
 
 /* State inicial */
 const initialState = {
@@ -63,6 +63,14 @@ export const ProjectState = (props) => {
         })
     }
 
+    /* Eliminar proyecto */
+    const deleteProject = (projectId) => {
+        dispatch({
+            type: DELETE_PROJECT,
+            payload: projectId
+        })
+    }
+
     return (
         <projectContext.Provider value={
             {
@@ -74,7 +82,8 @@ export const ProjectState = (props) => {
                 getProjects,
                 addNewProject,
                 showError,
-                projectActual
+                projectActual,
+                deleteProject
             }
         }>
             {props.children}

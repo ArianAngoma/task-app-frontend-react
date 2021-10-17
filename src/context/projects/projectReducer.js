@@ -1,4 +1,4 @@
-import {ACTUAL_PROJECT, ADD_PROJECT, FORM_PROJECT, GET_PROJECTS, VALIDATE_FORM} from '../../types';
+import {ACTUAL_PROJECT, ADD_PROJECT, DELETE_PROJECT, FORM_PROJECT, GET_PROJECTS, VALIDATE_FORM} from '../../types';
 
 export const projectReducer = (state, action) => {
     switch (action.type) {
@@ -28,6 +28,12 @@ export const projectReducer = (state, action) => {
             return {
                 ...state,
                 project: state.projects.find(project => project.id === action.payload.id)
+            }
+        case DELETE_PROJECT:
+            return {
+                ...state,
+                projects: state.projects.filter(project => project.id !== action.payload),
+                project: null
             }
         default:
             return state;
