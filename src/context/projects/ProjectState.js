@@ -4,7 +4,7 @@ import {v4 as uuidv4} from 'uuid';
 /* Importaciones propias */
 import {projectReducer} from './projectReducer';
 import {projectContext} from './projectContext';
-import {ADD_PROJECT, FORM_PROJECT, GET_PROJECTS, VALIDATE_FORM} from '../../types';
+import {ACTUAL_PROJECT, ADD_PROJECT, FORM_PROJECT, GET_PROJECTS, VALIDATE_FORM} from '../../types';
 
 /* State inicial */
 const initialState = {
@@ -14,7 +14,8 @@ const initialState = {
         {id: 2, name: 'Intranet'},
         {id: 3, name: 'Web'}
     ],
-    errorForm: false
+    errorForm: false,
+    project: null
 }
 
 export const ProjectState = (props) => {
@@ -54,16 +55,26 @@ export const ProjectState = (props) => {
         })
     }
 
+    /* Seleccionar el proyecto */
+    const projectActual = (project) => {
+        dispatch({
+            type: ACTUAL_PROJECT,
+            payload: project
+        })
+    }
+
     return (
         <projectContext.Provider value={
             {
                 form: project.form,
                 projects: project.projects,
                 errorForm: project.errorForm,
+                project: project.project,
                 showForm,
                 getProjects,
                 addNewProject,
-                showError
+                showError,
+                projectActual
             }
         }>
             {props.children}
