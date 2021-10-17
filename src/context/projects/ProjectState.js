@@ -7,7 +7,12 @@ import {FORM_PROJECT} from '../../types';
 
 /* State inicial */
 const initialState = {
-    form: false
+    form: false,
+    projects: [
+        {id: 1, name: 'Tienda virtual'},
+        {id: 2, name: 'Intranet'},
+        {id: 3, name: 'Web'}
+    ]
 }
 
 export const ProjectState = (props) => {
@@ -25,6 +30,7 @@ export const ProjectState = (props) => {
         <projectContext.Provider value={
             {
                 form: project.form,
+                projects: project.projects,
                 showForm
             }
         }>
