@@ -6,7 +6,7 @@ import {projectContext} from './projectContext';
 
 /* State inicial */
 const initialState = {
-    form: false
+    form: true
 }
 
 export const ProjectState = (props) => {
