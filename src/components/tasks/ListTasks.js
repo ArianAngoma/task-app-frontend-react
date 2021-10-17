@@ -13,9 +13,7 @@ export const ListTasks = () => {
     if (!project) return <h2>Selecciona un proyecto</h2>;
 
     const tasks = [
-        {name: 'Elegir plataforma', state: true},
-        {name: 'Cambiar cololres', state: true},
-        {name: 'Formas de pago', state: false}
+
     ];
 
     /* Eliminar proyecto */
