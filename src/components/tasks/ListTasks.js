@@ -1,7 +1,17 @@
 /* Importaciones propias */
 import {TaskItem} from './TaskItem';
+import {useContext} from 'react';
+
+/* Importaciones propias */
+import {projectContext} from '../../context/projects/projectContext';
 
 export const ListTasks = () => {
+    /* Obtener el state de proyecto */
+    const {project} = useContext(projectContext);
+
+    /* Valida si no hay un proycto activo */
+    if (!project) return <h2>Selecciona un proyecto</h2>;
+
     const tasks = [
         {name: 'Elegir plataforma', state: true},
         {name: 'Cambiar cololres', state: true},
@@ -10,7 +20,7 @@ export const ListTasks = () => {
 
     return (
         <>
-            <h2>Proyecto: Tienda Virtual</h2>
+            <h2>Proyecto: {project.name}</h2>
 
             <ul className="list-tasks">
                 {

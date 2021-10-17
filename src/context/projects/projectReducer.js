@@ -27,7 +27,7 @@ export const projectReducer = (state, action) => {
         case ACTUAL_PROJECT:
             return {
                 ...state,
-                project: state.projects.filter(project => project.id === action.payload.id)
+                project: state.projects.find(project => project.id === action.payload.id)
             }
         default:
             return state;
