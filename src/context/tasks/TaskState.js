@@ -3,7 +3,7 @@ import {useReducer} from 'react';
 /* Importaciones propias */
 import {taskReducer} from './taskReducer';
 import {taskContext} from './taskContext';
-import {ADD_TASK, TASKS_PROJECT, VALIDATE_TASK} from '../../types';
+import {ADD_TASK, DELETE_TASK, TASKS_PROJECT, VALIDATE_TASK} from '../../types';
 
 const initialState = {
     tasks: [
@@ -52,6 +52,14 @@ export const TaskState = (props) => {
         });
     }
 
+    /* Eliminar tarea */
+    const deleteTask = (taskId) => {
+        dispatch({
+            type: DELETE_TASK,
+            payload: taskId
+        })
+    }
+
     return (
         <taskContext.Provider value={{
             tasks: state.tasks,
@@ -59,7 +67,8 @@ export const TaskState = (props) => {
             errorTask: state.errorTask,
             getTasks,
             addTask,
-            validateTask
+            validateTask,
+            deleteTask
         }}>
             {props.children}
         </taskContext.Provider>
