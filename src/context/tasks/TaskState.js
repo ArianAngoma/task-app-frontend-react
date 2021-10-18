@@ -3,24 +3,25 @@ import {useReducer} from 'react';
 /* Importaciones propias */
 import {taskReducer} from './taskReducer';
 import {taskContext} from './taskContext';
-import {ADD_TASK, TASKS_PROJECT} from '../../types';
+import {ADD_TASK, TASKS_PROJECT, VALIDATE_TASK} from '../../types';
 
 const initialState = {
     tasks: [
-        {name: 'Elegir plataforma', state: true, projectId: 1},
-        {name: 'Cambiar cololres', state: true, projectId: 2},
-        {name: 'Formas de pago', state: false, projectId: 3},
-        {name: 'Elegir plataforma', state: true, projectId: 1},
-        {name: 'Cambiar cololres', state: true, projectId: 2},
-        {name: 'Formas de pago', state: false, projectId: 3},
-        {name: 'Elegir plataforma', state: true, projectId: 1},
-        {name: 'Cambiar cololres', state: true, projectId: 2},
-        {name: 'Formas de pago', state: false, projectId: 3},
-        {name: 'Elegir plataforma', state: true, projectId: 1},
-        {name: 'Cambiar cololres', state: true, projectId: 2},
-        {name: 'Formas de pago', state: false, projectId: 3}
+        {id: 1, name: 'Elegir plataforma', state: true, projectId: 1},
+        {id: 2, name: 'Cambiar cololres', state: true, projectId: 2},
+        {id: 3, name: 'Formas de pago', state: false, projectId: 3},
+        {id: 4, name: 'Elegir plataforma', state: true, projectId: 1},
+        {id: 5, name: 'Cambiar cololres', state: true, projectId: 2},
+        {id: 6, name: 'Formas de pago', state: false, projectId: 3},
+        {id: 7, name: 'Elegir plataforma', state: true, projectId: 1},
+        {id: 8, name: 'Cambiar cololres', state: true, projectId: 2},
+        {id: 9, name: 'Formas de pago', state: false, projectId: 3},
+        {id: 10, name: 'Elegir plataforma', state: true, projectId: 1},
+        {id: 11, name: 'Cambiar cololres', state: true, projectId: 2},
+        {id: 12, name: 'Formas de pago', state: false, projectId: 3}
     ],
-    tasksProject: null
+    tasksProject: null,
+    errorTask: false
 }
 
 export const TaskState = (props) => {
@@ -44,12 +45,21 @@ export const TaskState = (props) => {
         })
     }
 
+    /* Valida el formulario */
+    const validateTask = () => {
+        dispatch({
+            type: VALIDATE_TASK
+        });
+    }
+
     return (
         <taskContext.Provider value={{
             tasks: state.tasks,
             tasksProject: state.tasksProject,
+            errorTask: state.errorTask,
             getTasks,
-            addTask
+            addTask,
+            validateTask
         }}>
             {props.children}
         </taskContext.Provider>
