@@ -3,7 +3,16 @@ import {useReducer} from 'react';
 /* Importaciones propias */
 import {taskReducer} from './taskReducer';
 import {taskContext} from './taskContext';
-import {ADD_TASK, DELETE_TASK, STATE_TASK, TASK_ACTIVE, TASKS_PROJECT, VALIDATE_TASK} from '../../types';
+import {
+    ADD_TASK,
+    CLEAR_TASK,
+    DELETE_TASK,
+    STATE_TASK,
+    TASK_ACTIVE,
+    TASKS_PROJECT,
+    UPDATE_TASK,
+    VALIDATE_TASK
+} from '../../types';
 
 const initialState = {
     tasks: [
@@ -74,7 +83,22 @@ export const TaskState = (props) => {
         dispatch({
             type: TASK_ACTIVE,
             payload: task
-        })
+        });
+    }
+
+    /* Edita una tarea */
+    const updateTask = (task) => {
+        dispatch({
+            type: UPDATE_TASK,
+            payload: task
+        });
+    }
+
+    /* Limpiar la tarea seleccionada */
+    const cleatTask = () => {
+        dispatch({
+            type: CLEAR_TASK
+        });
     }
 
     return (
@@ -88,7 +112,9 @@ export const TaskState = (props) => {
             validateTask,
             deleteTask,
             changeStateTask,
-            taskActive
+            taskActive,
+            updateTask,
+            cleatTask
         }}>
             {props.children}
         </taskContext.Provider>

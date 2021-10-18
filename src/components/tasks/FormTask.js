@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 
 /* Importaciones propias */
 import {projectContext} from '../../context/projects/projectContext';
@@ -6,7 +6,7 @@ import {taskContext} from '../../context/tasks/taskContext';
 
 export const FormTask = () => {
     const {project} = useContext(projectContext);
-    const {addTask, errorTask, validateTask} = useContext(taskContext);
+    const {addTask, errorTask, validateTask, taskSelected, updateTask, cleatTask} = useContext(taskContext);
 
     const [task, setTask] = useState({
         name: ''
@@ -19,6 +19,12 @@ export const FormTask = () => {
         });
     }
 
+    /* Detectar si hay una tarea seleccionada */
+    useEffect(() => {
+        if (taskSelected) return setTask(taskSelected);
+        else setTask({name: ''});
+    }, [taskSelected]);
+
     /* Valida si no hay un proycto activo */
     if (!project) return null;
 
@@ -29,11 +35,19 @@ export const FormTask = () => {
         /* Validar formulario */
         if (name.trim() === '') return validateTask();
 
-        /* Agregar nueva Tarea */
-        task.id = new Date().getTime();
-        task.projectId = project.id;
-        task.state = false;
-        addTask(task);
+        /* Revisa si quiere editar o agregar una tarea */
+        if (!taskSelected) {
+            /* Agregar nueva Tarea */
+            task.id = new Date().getTime();
+            task.projectId = project.id;
+            task.state = false;
+            addTask(task);
+        } else {
+            updateTask(task);
+
+            /* Limpiar la tarea seleccionada */
+            cleatTask();
+        }
 
         /* Limpiar formulario */
         setTask({
@@ -56,7 +70,7 @@ export const FormTask = () => {
                 <div className="container-input">
                     <input type="submit"
                            className="btn btn-primary btn-submit btn-block"
-                           value="Agregar Tarea"/>
+                           value={(taskSelected) ? "Editar Tarea" : "Agregar Tarea"}/>
                 </div>
             </form>
 
