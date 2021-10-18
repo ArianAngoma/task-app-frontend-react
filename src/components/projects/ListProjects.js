@@ -1,4 +1,5 @@
 import {useContext, useEffect} from 'react';
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 /* Importaciones propias */
 import {ProjectItem} from './ProjectItem';
@@ -19,12 +20,17 @@ export const ListProjects = () => {
 
     return (
         <ul className="project-list">
-            {
-                projects.map(project => (
-                    <ProjectItem key={project.id}
-                                 project={project}/>
-                ))
-            }
+            <TransitionGroup>
+                {
+                    projects.map(project => (
+                        <CSSTransition key={project.id}
+                                       timeout={200}
+                                       classNames="projects">
+                            <ProjectItem project={project}/>
+                        </CSSTransition>
+                    ))
+                }
+            </TransitionGroup>
         </ul>
     )
 }

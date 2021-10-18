@@ -1,8 +1,8 @@
-/* Importaciones propias */
-import {TaskItem} from './TaskItem';
 import {useContext} from 'react';
+import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 /* Importaciones propias */
+import {TaskItem} from './TaskItem';
 import {projectContext} from '../../context/projects/projectContext';
 import {taskContext} from '../../context/tasks/taskContext';
 
@@ -29,9 +29,16 @@ export const ListTasks = () => {
                 {
                     (tasksProject.length === 0)
                         ? (<li className="task"><p>No hay tareas</p></li>)
-                        : (tasksProject.map(task => (
-                            <TaskItem key={task.id} task={task}/>
-                        )))
+                        :
+                        <TransitionGroup>
+                            {tasksProject.map(task => (
+                                <CSSTransition key={task.id}
+                                               timeout={200}
+                                               classNames="task">
+                                    <TaskItem task={task}/>
+                                </CSSTransition>
+                            ))}
+                        </TransitionGroup>
                 }
             </ul>
 

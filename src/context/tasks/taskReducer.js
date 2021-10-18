@@ -11,8 +11,8 @@ export const taskReducer = (state, action) => {
         case ADD_TASK:
             return {
                 ...state,
-                tasks: [...state.tasks, action.payload],
-                tasksProject: [...state.tasksProject, action.payload],
+                tasks: [action.payload, ...state.tasks],
+                tasksProject: [action.payload, ...state.tasksProject],
                 errorTask: false
             }
         case VALIDATE_TASK:
