@@ -1,5 +1,5 @@
 /* Importaciones propia */
-import {ADD_TASK, DELETE_TASK, TASKS_PROJECT, VALIDATE_TASK} from '../../types';
+import {ADD_TASK, DELETE_TASK, STATE_TASK, TASKS_PROJECT, VALIDATE_TASK} from '../../types';
 
 export const taskReducer = (state, action) => {
     switch (action.type) {
@@ -25,6 +25,20 @@ export const taskReducer = (state, action) => {
                 ...state,
                 tasks: state.tasks.filter(state => state.id !== action.payload),
                 tasksProject: state.tasksProject.filter(state => state.id !== action.payload)
+            }
+        case STATE_TASK:
+            return {
+                ...state,
+                tasks: state.tasks.map(task =>
+                    (task.id === action.payload.id)
+                        ? action.payload
+                        : task
+                ),
+                tasksProject: state.tasksProject.map(task =>
+                    (task.id === action.payload.id)
+                        ? action.payload
+                        : task
+                )
             }
         default:
             return state;

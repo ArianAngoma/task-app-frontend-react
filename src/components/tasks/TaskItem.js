@@ -2,11 +2,17 @@ import {useContext} from 'react';
 import {taskContext} from '../../context/tasks/taskContext';
 
 export const TaskItem = ({task}) => {
-    const {deleteTask} = useContext(taskContext);
+    const {deleteTask, changeStateTask} = useContext(taskContext);
 
     /* Eliminar tarea */
     const handleDeleteTask = () => {
         deleteTask(task.id);
+    }
+
+    /* Modificar el estado de las tareas */
+    const handleStateTask = () => {
+        task.state = !task.state;
+        changeStateTask(task);
     }
 
     return (
@@ -17,9 +23,11 @@ export const TaskItem = ({task}) => {
                 {
                     (task.state)
                         ? (<button type="button"
-                                   className="complete">Completado</button>)
+                                   className="complete"
+                                   onClick={handleStateTask}>Completado</button>)
                         : (<button type="button"
-                                   className="incomplete">Incompleto</button>)
+                                   className="incomplete"
+                                   onClick={handleStateTask}>Incompleto</button>)
                 }
             </div>
 
