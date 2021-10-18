@@ -10,9 +10,14 @@ export const FormTask = () => {
     /* Valida si no hay un proycto activo */
     if (!project) return null;
 
+    /* Enviar formulario */
+    const handleSubmit = (e) => {
+        e.preventDefault();
+    }
+
     return (
         <div className="form">
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className="container-input">
                     <input type="text"
                            className="input-text"
