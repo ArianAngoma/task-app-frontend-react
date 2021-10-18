@@ -8,10 +8,12 @@ export const ProjectItem = ({project}) => {
     /* Context de Proyectos */
     const {projectActual} = useContext(projectContext);
     /* Context de Tareas */
-    const {getTasks} = useContext(taskContext);
+    const {getTasks, cleatTask} = useContext(taskContext);
 
     /* Disparar la acción para activar el proyecto */
     const handleProjectActual = () => {
+        /* Limpiar la tarea seleccionada */
+        cleatTask();
         projectActual(project);
         getTasks(project.id)
     }

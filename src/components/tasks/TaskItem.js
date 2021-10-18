@@ -2,10 +2,12 @@ import {useContext} from 'react';
 import {taskContext} from '../../context/tasks/taskContext';
 
 export const TaskItem = ({task}) => {
-    const {deleteTask, changeStateTask, taskActive} = useContext(taskContext);
+    const {deleteTask, changeStateTask, taskActive, cleatTask} = useContext(taskContext);
 
     /* Eliminar tarea */
     const handleDeleteTask = () => {
+        /* Limpiar la tarea seleccionada */
+        cleatTask();
         deleteTask(task.id);
     }
 
