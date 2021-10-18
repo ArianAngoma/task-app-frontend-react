@@ -2,7 +2,7 @@ import {useContext} from 'react';
 import {taskContext} from '../../context/tasks/taskContext';
 
 export const TaskItem = ({task}) => {
-    const {deleteTask, changeStateTask} = useContext(taskContext);
+    const {deleteTask, changeStateTask, taskActive} = useContext(taskContext);
 
     /* Eliminar tarea */
     const handleDeleteTask = () => {
@@ -13,6 +13,11 @@ export const TaskItem = ({task}) => {
     const handleStateTask = () => {
         task.state = !task.state;
         changeStateTask(task);
+    }
+
+    /* Activa la tarea */
+    const handleEditState = () => {
+        taskActive(task);
     }
 
     return (
@@ -32,7 +37,9 @@ export const TaskItem = ({task}) => {
             </div>
 
             <div className="actions">
-                <button type="button" className="btn btn-primary">Editar</button>
+                <button type="button" className="btn btn-primary"
+                        onClick={handleEditState}>Editar
+                </button>
 
                 <button type="button"
                         className="btn btn-secondary"

@@ -3,7 +3,7 @@ import {useReducer} from 'react';
 /* Importaciones propias */
 import {taskReducer} from './taskReducer';
 import {taskContext} from './taskContext';
-import {ADD_TASK, DELETE_TASK, STATE_TASK, TASKS_PROJECT, VALIDATE_TASK} from '../../types';
+import {ADD_TASK, DELETE_TASK, STATE_TASK, TASK_ACTIVE, TASKS_PROJECT, VALIDATE_TASK} from '../../types';
 
 const initialState = {
     tasks: [
@@ -21,7 +21,8 @@ const initialState = {
         {id: 12, name: 'Formas de pago', state: false, projectId: 3}
     ],
     tasksProject: null,
-    errorTask: false
+    errorTask: false,
+    taskSelected: null
 }
 
 export const TaskState = (props) => {
@@ -68,16 +69,26 @@ export const TaskState = (props) => {
         });
     }
 
+    /* Activa una tarea para la edición */
+    const taskActive = (task) => {
+        dispatch({
+            type: TASK_ACTIVE,
+            payload: task
+        })
+    }
+
     return (
         <taskContext.Provider value={{
             tasks: state.tasks,
             tasksProject: state.tasksProject,
             errorTask: state.errorTask,
+            taskSelected: state.taskSelected,
             getTasks,
             addTask,
             validateTask,
             deleteTask,
-            changeStateTask
+            changeStateTask,
+            taskActive
         }}>
             {props.children}
         </taskContext.Provider>

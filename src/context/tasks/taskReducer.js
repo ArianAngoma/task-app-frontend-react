@@ -1,5 +1,5 @@
 /* Importaciones propia */
-import {ADD_TASK, DELETE_TASK, STATE_TASK, TASKS_PROJECT, VALIDATE_TASK} from '../../types';
+import {ADD_TASK, DELETE_TASK, STATE_TASK, TASK_ACTIVE, TASKS_PROJECT, VALIDATE_TASK} from '../../types';
 
 export const taskReducer = (state, action) => {
     switch (action.type) {
@@ -39,6 +39,11 @@ export const taskReducer = (state, action) => {
                         ? action.payload
                         : task
                 )
+            }
+        case TASK_ACTIVE:
+            return {
+                ...state,
+                taskSelected: action.payload
             }
         default:
             return state;
