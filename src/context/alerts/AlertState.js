@@ -10,7 +10,7 @@ const initialState = {
 }
 
 export const AlertState = (props) => {
-    const [state, dispatch] = useReducer(alertReducer, initialState);
+    const [alert, dispatch] = useReducer(alertReducer, initialState);
 
     /* Acciones */
     /* Mostrar alerta */
@@ -31,7 +31,7 @@ export const AlertState = (props) => {
 
     return (
         <alertContext.Provider value={{
-            alert: initialState.alert,
+            alert: alert.alert,
             showAlert
         }}>
             {props.children}

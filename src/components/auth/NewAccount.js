@@ -1,7 +1,13 @@
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {Link} from 'react-router-dom';
 
+/* Importaciones propias */
+import {alertContext} from '../../context/alerts/alertContext';
+
 export const NewAccount = () => {
+    /* Extraer valores del context */
+    const {alert, showAlert} = useContext(alertContext);
+
     /* State para registro de nuevo usuario */
     const [user, setUser] = useState({
         name: '',
@@ -24,10 +30,20 @@ export const NewAccount = () => {
         e.preventDefault();
 
         /* Validar que no haya campos vacios */
+        if ((name.trim() || email.trim() || password.trim() || confirm.trim()) === '') showAlert('Todos los campos son obligatorios', 'alert-error');
     };
 
     return (
         <div className="form-user">
+
+            {
+                (alert) && (
+                    <div className={`alert ${alert.category}`}>
+                        {alert.msg}
+                    </div>
+                )
+            }
+
             <div className="container-form shadow-dark">
                 <h1>Obtener una cuenta</h1>
 
