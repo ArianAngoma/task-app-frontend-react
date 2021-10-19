@@ -10,6 +10,7 @@ import {AlertState} from './context/alerts/AlertState';
 import {AuthState} from './context/auth/AuthState';
 
 function App() {
+    console.log(process.env.REACT_APP_API_URL)
     return (
         <ProjectState>
             <TaskState>

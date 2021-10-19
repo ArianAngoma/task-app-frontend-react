@@ -1,12 +1,20 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
 /* Importaciones propias */
 import {alertContext} from '../../context/alerts/alertContext';
+import {authContext} from '../../context/auth/authContext';
 
-export const NewAccount = () => {
+export const NewAccount = ({history}) => {
     /* Extraer valores del context */
     const {alert, showAlert} = useContext(alertContext);
+    const {registerUser, message, authenticated} = useContext(authContext);
+
+    /* Para poder escuchar cuando haya nuevos mensajes o se haya autenticado */
+    useEffect(() => {
+        if (authenticated) return history.push('/projects');
+        if (message) return showAlert(message.msg, message.category);
+    }, [message, authenticated, history])
 
     /* State para registro de nuevo usuario */
     const [user, setUser] = useState({
@@ -37,6 +45,11 @@ export const NewAccount = () => {
 
         /* Valida si password son iguales */
         if (password !== confirm) return showAlert('Los passwords no son iguales', 'alert-error');
+
+        /* Enviar formulario */
+        registerUser({
+            name, email, password
+        });
     };
 
     return (
