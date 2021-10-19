@@ -14,7 +14,8 @@ export const NewAccount = ({history}) => {
     useEffect(() => {
         if (authenticated) return history.push('/projects');
         if (message) return showAlert(message.msg, message.category);
-    }, [message, authenticated, history])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [message, authenticated, history]);
 
     /* State para registro de nuevo usuario */
     const [user, setUser] = useState({

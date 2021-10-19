@@ -8,9 +8,13 @@ import {ProjectState} from './context/projects/ProjectState';
 import {TaskState} from './context/tasks/TaskState';
 import {AlertState} from './context/alerts/AlertState';
 import {AuthState} from './context/auth/AuthState';
+import {tokenAuth} from './config/token';
+
+/* Revisar si tenemos token */
+const token = localStorage.getItem('token');
+if (token) tokenAuth();
 
 function App() {
-    console.log(process.env.REACT_APP_API_URL)
     return (
         <ProjectState>
             <TaskState>
