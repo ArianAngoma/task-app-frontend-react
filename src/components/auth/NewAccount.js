@@ -30,7 +30,13 @@ export const NewAccount = () => {
         e.preventDefault();
 
         /* Validar que no haya campos vacios */
-        if ((name.trim() || email.trim() || password.trim() || confirm.trim()) === '') showAlert('Todos los campos son obligatorios', 'alert-error');
+        if ((name.trim() || email.trim() || password.trim() || confirm.trim()) === '') return showAlert('Todos los campos son obligatorios', 'alert-error');
+
+        /* Valida si password tiene 6 caracteres */
+        if (password.length < 6) return showAlert('El password debe ser de al menos 6 caracteres', 'alert-error');
+
+        /* Valida si password son iguales */
+        if (password !== confirm) return showAlert('Los passwords no son iguales', 'alert-error');
     };
 
     return (
