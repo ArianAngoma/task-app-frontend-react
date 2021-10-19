@@ -13,3 +13,6 @@ export const STATE_TASK = 'STATE_TASK';
 export const TASK_ACTIVE = 'TASK_ACTIVE';
 export const UPDATE_TASK = 'UPDATE_TASK';
 export const CLEAR_TASK = 'CLEAR_TASK';
+
+export const SHOW_ALERT = 'SHOW_ALERT';
+export const CLEAR_ALERT = 'CLEAR_ALERT';
