@@ -3,7 +3,7 @@ import {useReducer} from 'react';
 /* Importaciones propias */
 import {authReducer} from './authReducer';
 import {authContext} from './authContext';
-import {LOGIN_ERROR, LOGIN_SUCCESSFUL, REGISTER_ERROR, REGISTER_SUCCESSFUL} from '../../types';
+import {LOGIN_ERROR, LOGIN_SUCCESSFUL, LOGOUT, REGISTER_ERROR, REGISTER_SUCCESSFUL} from '../../types';
 import {clientAxios} from '../../config/axios';
 import {tokenAuth} from '../../config/token';
 
@@ -97,6 +97,13 @@ export const AuthState = (props) => {
         }
     }
 
+    /* Cerrar sesión */
+    const closeSession = () => {
+        dispatch({
+            type: LOGOUT
+        });
+    }
+
     return (
         <authContext.Provider value={{
             token: auth.token,
@@ -105,7 +112,8 @@ export const AuthState = (props) => {
             message: auth.message,
             registerUser,
             signIn,
-            renewToken
+            renewToken,
+            closeSession
         }}>
             {props.children}
         </authContext.Provider>

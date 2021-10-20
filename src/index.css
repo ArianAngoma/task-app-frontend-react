@@ -412,3 +412,7 @@ aside {
 .btn-delete:hover {
     background-color: var(--gris2);
 }
+
+.close-session {
+    color: white;
+}
