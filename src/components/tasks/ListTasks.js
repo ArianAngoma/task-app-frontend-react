@@ -33,7 +33,7 @@ export const ListTasks = () => {
                         :
                         <TransitionGroup>
                             {tasksProject.map(task => (
-                                <CSSTransition key={task.id}
+                                <CSSTransition key={task.uid}
                                                timeout={200}
                                                classNames="task">
                                     <TaskItem task={task}/>

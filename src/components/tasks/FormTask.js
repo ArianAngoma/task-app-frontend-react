@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 /* Importaciones propias */
 import {useForm} from '../../hooks/useForm';
-import {taskAdded, taskClearActive, taskUpdated} from '../../actions/task';
+import {taskClearActive, taskStartAdd, taskUpdated} from '../../actions/task';
 import {uiCloseErrorTask, uiOpenErrorTask} from '../../actions/ui';
 
 /* Estado inicial del formulario */
@@ -48,11 +48,9 @@ export const FormTask = () => {
         /* Revisa si quiere editar o agregar una tarea */
         if (!activeTask) {
             /* Agregar nueva Tarea */
-            dispatch(taskAdded({
+            dispatch(taskStartAdd({
                 ...formTaskValues,
-                id: new Date().getTime(),
-                projectId: activeProject.id,
-                state: false
+                project: activeProject.uid,
             }));
         } else {
             // console.log({...formTaskValues})

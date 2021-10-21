@@ -3,20 +3,7 @@ import {types} from '../types/types';
 
 /* Estado inicial */
 const initialState = {
-    tasks: [
-        {id: 1, name: 'Elegir plataforma', state: true, projectId: 1},
-        {id: 2, name: 'Cambiar cololres', state: true, projectId: 2},
-        {id: 3, name: 'Formas de pago', state: false, projectId: 3},
-        {id: 4, name: 'Elegir plataforma', state: true, projectId: 1},
-        {id: 5, name: 'Cambiar cololres', state: true, projectId: 2},
-        {id: 6, name: 'Formas de pago', state: false, projectId: 3},
-        {id: 7, name: 'Elegir plataforma', state: true, projectId: 1},
-        {id: 8, name: 'Cambiar cololres', state: true, projectId: 2},
-        {id: 9, name: 'Formas de pago', state: false, projectId: 3},
-        {id: 10, name: 'Elegir plataforma', state: true, projectId: 1},
-        {id: 11, name: 'Cambiar cololres', state: true, projectId: 2},
-        {id: 12, name: 'Formas de pago', state: false, projectId: 3}
-    ],
+    tasks: [],
     tasksProject: [],
     activeTask: null
 }
@@ -27,7 +14,7 @@ export const taskReducer = (state = initialState, action) => {
         case types.taskGetByProject:
             return {
                 ...state,
-                tasksProject: state.tasks.filter(task => task.projectId === action.payload)
+                tasksProject: state.tasks.filter(task => task.project === action.payload)
             }
         /* Activar una tarea */
         case types.taskSetActive:
