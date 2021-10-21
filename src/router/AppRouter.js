@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Login} from '../components/auth/Login';
 import {NewAccount} from '../components/auth/NewAccount';
 import {Projects} from '../components/projects/Projects';
+import {startChecking} from '../actions/auth';
 
 export const AppRouter = () => {
     const dispatch = useDispatch();
@@ -19,9 +20,9 @@ export const AppRouter = () => {
     const {checking, user} = useSelector(state => state.auth);
 
     /* Validar si tengo un usuario logueado */
-    /*useEffect(() => {
-
-    }, [dispatch]);*/
+    useEffect(() => {
+        dispatch(startChecking());
+    }, [dispatch]);
 
     return (
         <Router>
