@@ -44,3 +44,14 @@ export const authCheckingFinish = () => ({
     type: types.authCheckingFinish
 });
 
+/* Registro de usuario - comienzo */
+export const startRegister = (name, email, password) => {
+    return async (dispatch) => {
+        const resp = await fetchNoToken('auth', {name, email, password}, 'POST');
+        const data = await resp.json();
+        // console.log(data);
+
+        await saveData(data, dispatch);
+    }
+}
+
