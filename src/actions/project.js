@@ -1,6 +1,7 @@
 /* Importaciones propias */
 import {types} from '../types/types';
 import {fetchWithToken} from '../helpers/fetch';
+import {showAlert} from './alert';
 
 /* Activar proyecto */
 export const projectSetActive = (project) => ({
@@ -45,7 +46,13 @@ export const projectStartAdd = (project) => {
                 project.created = data.project.created;
                 project.uid = data.project.uid;
 
-                dispatch(projectAdded(project))
+                return dispatch(projectAdded(project))
+            } else {
+                if (data.msg) {
+                    return dispatch(showAlert(data.msg, 'alert-error'));
+                } else {
+                    return dispatch(showAlert(data.errors[0].msg, 'alert-error'));
+                }
             }
         } catch (e) {
             console.log(e);
@@ -61,7 +68,15 @@ export const projectStartLoad = () => {
             const data = await resp.json();
             // console.log(data);
 
-            dispatch(projectLoaded(data.projects));
+            if (data.ok) {
+                return dispatch(projectLoaded(data.projects));
+            } else {
+                if (data.msg) {
+                    return dispatch(showAlert(data.msg, 'alert-error'));
+                } else {
+                    return dispatch(showAlert(data.errors[0].msg, 'alert-error'));
+                }
+            }
         } catch (e) {
             console.log(e);
         }
@@ -77,8 +92,15 @@ export const projectStartDelete = () => {
         try {
             const resp = await fetchWithToken(`project/${uid}`, {}, 'DELETE');
             const data = await resp.json();
-
+            // console.log(data);
             if (data.ok) return dispatch(projectDeleted());
+            else {
+                if (data.msg) {
+                    return dispatch(showAlert(data.msg, 'alert-error'));
+                } else {
+                    return dispatch(showAlert(data.errors[0].msg, 'alert-error'));
+                }
+            }
         } catch (e) {
             console.log(e);
         }

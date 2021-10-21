@@ -9,6 +9,9 @@ import {projectStartLoad} from '../../actions/project';
 export const ListProjects = () => {
     const dispatch = useDispatch();
 
+    /* Store de alert */
+    const {alertOpen, alert} = useSelector(state => state.alert);
+
     /* Obtener todos los proyectos al cargar el componente */
     useEffect(() => {
         dispatch(projectStartLoad());
@@ -22,6 +25,15 @@ export const ListProjects = () => {
 
     return (
         <ul className="project-list">
+
+            {
+                (alertOpen) && (
+                    <div className={`alert ${alert.category}`}>
+                        {alert.msg}
+                    </div>
+                )
+            }
+
             <TransitionGroup>
                 {
                     projects.map(project => (
