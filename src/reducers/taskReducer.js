@@ -51,7 +51,7 @@ export const taskReducer = (state = initialState, action) => {
         case types.taskDeleted:
             return {
                 ...state,
-                tasksProject: state.tasksProject.filter(state => state.id !== action.payload)
+                tasksProject: state.tasksProject.filter(state => state.uid !== action.payload)
             }
         /* Cargar tareas */
         case types.taskLoaded:

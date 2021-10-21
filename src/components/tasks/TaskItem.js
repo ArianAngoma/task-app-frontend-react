@@ -1,7 +1,7 @@
 import {useDispatch} from 'react-redux';
 
 /* Importaciones propias */
-import {taskChangeState, taskClearActive, taskDeleted, taskSetActive} from '../../actions/task';
+import {taskChangeState, taskClearActive, taskSetActive, taskStartDelete} from '../../actions/task';
 
 export const TaskItem = ({task}) => {
     const dispatch = useDispatch();
@@ -12,7 +12,8 @@ export const TaskItem = ({task}) => {
         dispatch(taskClearActive());
 
         /* Eliminar tarea */
-        dispatch(taskDeleted(task.id));
+        /*dispatch(taskDeleted(task.uid));*/
+        dispatch(taskStartDelete(task.uid));
     }
 
     /* Modificar el estado de la tarea */

@@ -90,3 +90,24 @@ export const taskStartLoad = (projectId) => {
         }
     }
 }
+
+/* Eliminar tarea - comienzo */
+export const taskStartDelete = (taskId) => {
+    return async (dispatch) => {
+        try {
+            const resp = await fetchWithToken(`task/${taskId}`, {}, 'DELETE');
+            const data = await resp.json();
+
+            if (data.ok) return dispatch(taskDeleted(taskId));
+            else {
+                if (data.msg) {
+                    return dispatch(showAlert(data.msg, 'alert-error'));
+                } else {
+                    return dispatch(showAlert(data.errors[0].msg, 'alert-error'));
+                }
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
