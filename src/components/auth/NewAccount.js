@@ -1,22 +1,7 @@
 import {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 
-/* Importaciones propias */
-import {alertContext} from '../../context/alerts/alertContext';
-import {authContext} from '../../context/auth/authContext';
-
-export const NewAccount = ({history}) => {
-    /* Extraer valores del context */
-    const {alert, showAlert} = useContext(alertContext);
-    const {registerUser, message, authenticated} = useContext(authContext);
-
-    /* Para poder escuchar cuando haya nuevos mensajes o se haya autenticado */
-    useEffect(() => {
-        if (authenticated) return history.push('/projects');
-        if (message) return showAlert(message.msg, message.category);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [message, authenticated, history]);
-
+export const NewAccount = () => {
     /* State para registro de nuevo usuario */
     const [user, setUser] = useState({
         name: '',
@@ -38,31 +23,26 @@ export const NewAccount = ({history}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        /* Validar que no haya campos vacios */
-        if ((name.trim() || email.trim() || password.trim() || confirm.trim()) === '') return showAlert('Todos los campos son obligatorios', 'alert-error');
+        /*/!* Validar que no haya campos vacios *!/
+        if ((name.trim() || email.trim() || password.trim() || confirm.trim()) === '') return showAlert('Todos los campos son obligatorios', 'alerts-error');
 
-        /* Valida si password tiene 6 caracteres */
-        if (password.length < 6) return showAlert('El password debe ser de al menos 6 caracteres', 'alert-error');
+        /!* Valida si password tiene 6 caracteres *!/
+        if (password.length < 6) return showAlert('El password debe ser de al menos 6 caracteres', 'alerts-error');
 
-        /* Valida si password son iguales */
-        if (password !== confirm) return showAlert('Los passwords no son iguales', 'alert-error');
-
-        /* Enviar formulario */
-        registerUser({
-            name, email, password
-        });
+        /!* Valida si password son iguales *!/
+        if (password !== confirm) return showAlert('Los passwords no son iguales', 'alerts-error');*/
     };
 
     return (
         <div className="form-user">
 
-            {
+           {/* {
                 (alert) && (
                     <div className={`alert ${alert.category}`}>
                         {alert.msg}
                     </div>
                 )
-            }
+            }*/}
 
             <div className="container-form shadow-dark">
                 <h1>Obtener una cuenta</h1>

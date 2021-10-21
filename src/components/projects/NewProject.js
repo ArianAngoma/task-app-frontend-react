@@ -1,24 +1,28 @@
-import {useContext, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
 /* Importaciones propias */
-import {projectContext} from '../../context/projects/projectContext';
+import {useForm} from '../../hooks/useForm';
+import {uiCloseErrorProject, uiCloseFormProject, uiOpenErrorProject, uiOpenFormProject} from '../../actions/ui';
+import {projectAdded} from '../../actions/project';
+
+/* Estado inicial del formulario */
+const initialStateForm = {
+    name: ''
+}
 
 export const NewProject = () => {
-    /* Obtener state del formulario */
-    const projectsContext = useContext(projectContext);
-    const {form, showForm, addNewProject, errorForm, showError} = projectsContext;
+    const dispatch = useDispatch();
 
-    const [project, setProject] = useState({
-        name: ''
-    });
-    const {name} = project;
+    /* Leer state de uiForm */
+    const {openFormProject, errorFormProject} = useSelector(state => state.ui);
 
-    /* Leer inputs */
-    const handleChange = (e) => {
-        setProject({
-            ...project,
-            [e.target.name]: e.target.value
-        })
+    /* Hook para el formulario de proyecto */
+    const [formProjectValues, handleInputChange, resetForm] = useForm(initialStateForm);
+    const {name} = formProjectValues;
+
+    /* Mostrar formulario */
+    const handleShowForm = () => {
+        dispatch(uiOpenFormProject());
     }
 
     /* Enviar formulario */
@@ -26,18 +30,19 @@ export const NewProject = () => {
         e.preventDefault();
 
         /* Validar proyecto */
-        if (name === '') return showError();
+        if (!name.length) return dispatch(uiOpenErrorProject());
 
-        /* Agregar proyecto al state */
-        addNewProject(project);
+        /* Agregar nuevo proyecto */
+        dispatch(projectAdded({id: new Date().getTime(), name}));
+
+        /* Cerrar error del formulario */
+        dispatch(uiCloseErrorProject());
 
         /* Limpiar formulario */
-        setProject({name: ''})
-    }
+        resetForm(initialStateForm);
 
-    /* Mostrar formulario */
-    const handleShowForm = () => {
-        showForm();
+        /* Cerrar formulario de proyecto */
+        dispatch(uiCloseFormProject());
     }
 
     return (
@@ -49,7 +54,7 @@ export const NewProject = () => {
             </button>
 
             {
-                (form) && (
+                (openFormProject) && (
                     <form className="new-project-form"
                           onSubmit={handleSubmit}>
                         <input type="text"
@@ -57,7 +62,7 @@ export const NewProject = () => {
                                placeholder="Nombre del proyecto"
                                name="name"
                                value={name}
-                               onChange={handleChange}/>
+                               onChange={handleInputChange}/>
 
                         <input type="submit"
                                className="btn btn-primary btn-block"
@@ -67,7 +72,7 @@ export const NewProject = () => {
             }
 
             {
-                (errorForm) && (
+                (errorFormProject) && (
                     <p className="message error">El nombre del proyecto es obligatorio</p>
                 )
             }

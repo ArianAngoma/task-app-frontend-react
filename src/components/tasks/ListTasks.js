@@ -1,33 +1,33 @@
-import {useContext} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 /* Importaciones propias */
 import {TaskItem} from './TaskItem';
-import {projectContext} from '../../context/projects/projectContext';
-import {taskContext} from '../../context/tasks/taskContext';
+import {projectDeleted} from '../../actions/project';
 
 export const ListTasks = () => {
-    /* Obtener el state de proyecto */
-    const {project, deleteProject} = useContext(projectContext);
-    /* Context para Tareas */
-    const {tasksProject} = useContext(taskContext);
+    const dispatch = useDispatch();
 
-    /* Valida si no hay un proycto activo */
-    if (!project) return <h2>Selecciona un proyecto</h2>;
+    /* Store de proyecto */
+    const {activeProject} = useSelector(state => state.project);
+    /* Store de tarea */
+    const {tasksProject} = useSelector(state => state.task);
 
+    /* Valida si no hay un proyecto activo */
+    if (!activeProject) return <h2>Selecciona un proyecto</h2>;
 
     /* Eliminar proyecto */
     const handleDeleteProject = () => {
-        deleteProject(project.id);
+        dispatch(projectDeleted());
     }
 
     return (
         <>
-            <h2>Proyecto: {project.name}</h2>
+            <h2>Proyecto: {activeProject.name}</h2>
 
             <ul className="list-tasks">
                 {
-                    (tasksProject.length === 0)
+                    (!tasksProject.length)
                         ? (<li className="task"><p>No hay tareas</p></li>)
                         :
                         <TransitionGroup>

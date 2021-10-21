@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+/* Importaciones propias */
+import TaskApp from './TaskApp';
+
 import './index.css';
-import App from './App';
 
 ReactDOM.render(
-    <App/>,
+    <TaskApp/>,
     document.getElementById('root')
 );

@@ -1,58 +1,73 @@
-import {useContext, useEffect, useState} from 'react';
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
 /* Importaciones propias */
-import {projectContext} from '../../context/projects/projectContext';
-import {taskContext} from '../../context/tasks/taskContext';
+import {useForm} from '../../hooks/useForm';
+import {taskAdded, taskClearActive, taskUpdated} from '../../actions/task';
+import {uiCloseErrorTask, uiOpenErrorTask} from '../../actions/ui';
+
+/* Estado inicial del formulario */
+const initialStateForm = {
+    name: ''
+}
 
 export const FormTask = () => {
-    const {project} = useContext(projectContext);
-    const {addTask, errorTask, validateTask, taskSelected, updateTask, cleatTask} = useContext(taskContext);
+    const dispatch = useDispatch();
 
-    const [task, setTask] = useState({
-        name: ''
-    });
-    const {name} = task;
-    const handleChange = (e) => {
-        setTask({
-            ...task,
-            [e.target.name]: e.target.value
-        });
-    }
+    /* Leer store de uiForm */
+    const {errorFormTask} = useSelector(state => state.ui);
+
+    /* Store de proyecto */
+    const {activeProject} = useSelector(state => state.project);
+    /* Store de tarea */
+    const {activeTask} = useSelector(state => state.task);
+
+    /* Hook para el formulario de proyecto */
+    const [formTaskValues, handleInputChange, resetForm] = useForm(initialStateForm);
+    const {name} = formTaskValues;
 
     /* Detectar si hay una tarea seleccionada */
     useEffect(() => {
-        if (taskSelected) return setTask(taskSelected);
-        else setTask({name: ''});
-    }, [taskSelected]);
+        if (activeTask) return resetForm(activeTask);
+        else resetForm(initialStateForm);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [activeTask]);
 
-    /* Valida si no hay un proycto activo */
-    if (!project) return null;
+    /* Valida si no hay un proyecto activo */
+    if (!activeProject) return null;
 
     /* Enviar formulario */
     const handleSubmit = (e) => {
         e.preventDefault();
 
         /* Validar formulario */
-        if (name.trim() === '') return validateTask();
+        if (!name.length) return dispatch(uiOpenErrorTask());
+        /* Cerrar error del formulario */
+        dispatch(uiCloseErrorTask());
 
         /* Revisa si quiere editar o agregar una tarea */
-        if (!taskSelected) {
+        if (!activeTask) {
             /* Agregar nueva Tarea */
-            task.id = new Date().getTime();
-            task.projectId = project.id;
-            task.state = false;
-            addTask(task);
+            dispatch(taskAdded({
+                ...formTaskValues,
+                id: new Date().getTime(),
+                projectId: activeProject.id,
+                state: false
+            }));
         } else {
-            updateTask(task);
+            // console.log({...formTaskValues})
 
-            /* Limpiar la tarea seleccionada */
-            cleatTask();
+            /* Edita la tarea activa */
+            dispatch(taskUpdated({
+                ...formTaskValues
+            }));
+
+            /* Limpiar la tarea activa */
+            dispatch(taskClearActive());
         }
 
         /* Limpiar formulario */
-        setTask({
-            name: ''
-        });
+        resetForm(initialStateForm);
     }
 
     return (
@@ -64,19 +79,20 @@ export const FormTask = () => {
                            placeholder="Nombre de la tarea"
                            name="name"
                            value={name}
-                           onChange={handleChange}/>
+                           onChange={handleInputChange}/>
                 </div>
 
                 <div className="container-input">
                     <input type="submit"
                            className="btn btn-primary btn-submit btn-block"
-                           value={(taskSelected) ? "Editar Tarea" : "Agregar Tarea"}/>
+                           value={(activeTask) ? "Editar Tarea" : "Agregar Tarea"}/>
                 </div>
             </form>
 
             {
-                (errorTask) && <p className="message error">El nombre de la tarea es obligatorio</p>
+                (errorFormTask) && <p className="message error">El nombre de la tarea es obligatorio</p>
             }
+
         </div>
     )
 }

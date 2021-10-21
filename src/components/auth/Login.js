@@ -1,53 +1,43 @@
-import {useState, useContext, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 
 /* Importaciones propias */
-import {alertContext} from '../../context/alerts/alertContext';
-import {authContext} from '../../context/auth/authContext';
+import {startLogin} from '../../actions/auth';
+import {showAlert} from '../../actions/alert';
+import {useForm} from '../../hooks/useForm';
 
-export const Login = ({history}) => {
-    /* Extraer valores del context */
-    const {alert, showAlert} = useContext(alertContext);
-    const {message, authenticated, signIn} = useContext(authContext);
+/* Estado inicial del formulario */
+const initialStateForm = {
+    email: '',
+    password: ''
+}
 
-    /* Para poder escuchar cuando haya nuevos mensajes o se haya autenticado */
-    useEffect(() => {
-        if (authenticated) return history.push('/projects');
-        if (message) return showAlert(message.msg, message.category);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [message, authenticated, history])
+export const Login = () => {
+    const dispatch = useDispatch();
 
-    /* State para iniciar sesión */
-    const [user, setUser] = useState({
-        email: '',
-        password: ''
-    });
-    /* Extraer campos de user */
-    const {email, password} = user;
+    /* Store de alert */
+    const {alertOpen, alert} = useSelector(state => state.alert);
 
-    const handleOnChange = (e) => {
-        setUser({
-            ...user,
-            [e.target.name]: e.target.value
-        });
-    };
+    /* Hook para el forumario de logueo */
+    const [formLoginValues, handleInputChange] = useForm(initialStateForm);
+    const {email, password} = formLoginValues;
 
     /* Inicio de sesión */
     const handleSubmit = (e) => {
         e.preventDefault();
 
         /* Validar que no haya campos vacios */
-        if ((email.trim() || password.trim()) === '') return showAlert('Todos los campos son obligatorios', 'alert-error');
+        if (!email.length || !password.length) return dispatch(showAlert('Todos los campos son obligatorios', 'alert-error'));
 
-        /* Loguear usuario */
-        signIn({email, password});
+        /* Dispara acción para comenzar el logueo */
+        dispatch(startLogin(email, password));
     };
 
     return (
         <div className="form-user">
 
             {
-                (alert) && (
+                (alertOpen) && (
                     <div className={`alert ${alert.category}`}>
                         {alert.msg}
                     </div>
@@ -65,7 +55,7 @@ export const Login = ({history}) => {
                                name="email"
                                placeholder="Tu email"
                                value={email}
-                               onChange={handleOnChange}/>
+                               onChange={handleInputChange}/>
                     </div>
 
                     <div className="field-form">
@@ -75,7 +65,7 @@ export const Login = ({history}) => {
                                name="password"
                                placeholder="Tu password"
                                value={password}
-                               onChange={handleOnChange}/>
+                               onChange={handleInputChange}/>
                     </div>
 
                     <div className="field-form">

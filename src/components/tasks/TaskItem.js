@@ -1,25 +1,29 @@
-import {useContext} from 'react';
-import {taskContext} from '../../context/tasks/taskContext';
+import {useDispatch} from 'react-redux';
+
+/* Importaciones propias */
+import {taskChangeState, taskClearActive, taskDeleted, taskSetActive} from '../../actions/task';
 
 export const TaskItem = ({task}) => {
-    const {deleteTask, changeStateTask, taskActive, cleatTask} = useContext(taskContext);
+    const dispatch = useDispatch();
 
     /* Eliminar tarea */
     const handleDeleteTask = () => {
-        /* Limpiar la tarea seleccionada */
-        cleatTask();
-        deleteTask(task.id);
+        /* Limpiar la tarea activa */
+        dispatch(taskClearActive());
+
+        /* Eliminar tarea */
+        dispatch(taskDeleted(task.id));
     }
 
-    /* Modificar el estado de las tareas */
-    const handleStateTask = () => {
+    /* Modificar el estado de la tarea */
+    const handleChangeStateTask = () => {
         task.state = !task.state;
-        changeStateTask(task);
+        dispatch(taskChangeState(task));
     }
 
     /* Activa la tarea */
     const handleEditState = () => {
-        taskActive(task);
+        dispatch(taskSetActive(task));
     }
 
     return (
@@ -31,10 +35,10 @@ export const TaskItem = ({task}) => {
                     (task.state)
                         ? (<button type="button"
                                    className="complete"
-                                   onClick={handleStateTask}>Completado</button>)
+                                   onClick={handleChangeStateTask}>Completado</button>)
                         : (<button type="button"
                                    className="incomplete"
-                                   onClick={handleStateTask}>Incompleto</button>)
+                                   onClick={handleChangeStateTask}>Incompleto</button>)
                 }
             </div>
 
