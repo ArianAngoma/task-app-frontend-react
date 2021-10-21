@@ -3,7 +3,7 @@ import {
     BrowserRouter as Router,
     Switch,
     // Route,
-    Redirect, Route
+    Redirect, // Route
 } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -27,7 +27,11 @@ export const AppRouter = () => {
     }, [dispatch]);
 
     /* Loading */
-    if (checking) return null;
+    if (checking) return (
+        <div id="loader">
+
+        </div>
+    );
 
     return (
         <Router>
