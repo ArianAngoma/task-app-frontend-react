@@ -3,11 +3,7 @@ import {types} from '../types/types';
 
 /* Estado inicial */
 const initialState = {
-    projects: [
-        {id: 1, name: 'Tienda virtual'},
-        {id: 2, name: 'Intranet'},
-        {id: 3, name: 'Web'}
-    ],
+    projects: [],
     activeProject: null
 }
 

@@ -1,5 +1,6 @@
 /* Importaciones propias */
 import {types} from '../types/types';
+import {fetchWithToken} from '../helpers/fetch';
 
 /* Activar proyecto */
 export const projectSetActive = (project) => ({
@@ -22,3 +23,19 @@ export const projectAdded = (project) => ({
 export const projectDeleted = () => ({
     type: types.projectDeleted
 });
+
+/* Agregar nuevo proyecto - comienzo */
+export const projectStartAdd = (project) => {
+    return async (dispatch) => {
+        // console.log(project);
+        try {
+            const resp = await fetchWithToken('project', project, 'POST');
+            const data = await resp.json();
+            // console.log(data);
+
+            if (data.ok) return dispatch(projectAdded(project));
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}

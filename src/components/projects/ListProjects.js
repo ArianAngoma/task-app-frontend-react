@@ -16,7 +16,7 @@ export const ListProjects = () => {
             <TransitionGroup>
                 {
                     projects.map(project => (
-                        <CSSTransition key={project.id}
+                        <CSSTransition key={project.uid}
                                        timeout={200}
                                        classNames="projects">
                             <ProjectItem project={project}/>

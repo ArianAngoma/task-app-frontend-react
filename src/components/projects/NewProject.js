@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 /* Importaciones propias */
 import {useForm} from '../../hooks/useForm';
 import {uiCloseErrorProject, uiCloseFormProject, uiOpenErrorProject, uiOpenFormProject} from '../../actions/ui';
-import {projectAdded} from '../../actions/project';
+import {projectStartAdd} from '../../actions/project';
 
 /* Estado inicial del formulario */
 const initialStateForm = {
@@ -33,7 +33,8 @@ export const NewProject = () => {
         if (!name.length) return dispatch(uiOpenErrorProject());
 
         /* Agregar nuevo proyecto */
-        dispatch(projectAdded({id: new Date().getTime(), name}));
+        /*dispatch(projectAdded({id: new Date().getTime(), name}));*/
+        dispatch(projectStartAdd({name}));
 
         /* Cerrar error del formulario */
         dispatch(uiCloseErrorProject());
