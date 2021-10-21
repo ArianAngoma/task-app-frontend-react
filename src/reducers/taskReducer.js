@@ -3,19 +3,12 @@ import {types} from '../types/types';
 
 /* Estado inicial */
 const initialState = {
-    tasks: [],
     tasksProject: [],
     activeTask: null
 }
 
 export const taskReducer = (state = initialState, action) => {
     switch (action.type) {
-        /* Obtener tareas por proyecto */
-        case types.taskGetByProject:
-            return {
-                ...state,
-                tasksProject: state.tasks.filter(task => task.project === action.payload)
-            }
         /* Activar una tarea */
         case types.taskSetActive:
             return {
@@ -32,13 +25,8 @@ export const taskReducer = (state = initialState, action) => {
         case types.taskChangeState:
             return {
                 ...state,
-                tasks: state.tasks.map(task =>
-                    (task.id === action.payload.id)
-                        ? action.payload
-                        : task
-                ),
                 tasksProject: state.tasksProject.map(task =>
-                    (task.id === action.payload.id)
+                    (task.uid === action.payload.uid)
                         ? action.payload
                         : task
                 )
@@ -47,18 +35,12 @@ export const taskReducer = (state = initialState, action) => {
         case types.taskAdded:
             return {
                 ...state,
-                tasks: [action.payload, ...state.tasks],
                 tasksProject: [action.payload, ...state.tasksProject]
             }
         /* Actualizar tarea */
         case types.taskUpdated:
             return {
                 ...state,
-                tasks: state.tasks.map(task =>
-                    (task.id === action.payload.id)
-                        ? action.payload
-                        : task
-                ),
                 tasksProject: state.tasksProject.map(task =>
                     (task.id === action.payload.id)
                         ? action.payload
@@ -69,8 +51,13 @@ export const taskReducer = (state = initialState, action) => {
         case types.taskDeleted:
             return {
                 ...state,
-                tasks: state.tasks.filter(state => state.id !== action.payload),
                 tasksProject: state.tasksProject.filter(state => state.id !== action.payload)
+            }
+        /* Cargar tareas */
+        case types.taskLoaded:
+            return {
+                ...state,
+                tasksProject: [...action.payload]
             }
         default:
             return state;

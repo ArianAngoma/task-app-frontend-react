@@ -12,7 +12,7 @@ export const types = {
     projectAdded: '[project] Project Added',
     projectDeleted: '[project] Project Deleted',
 
-    taskGetByProject: '[task] Get Tasks By Project',
+    taskLoaded: '[task] Task Loaded',
     taskSetActive: '[task] Set Active',
     taskClearActive: '[task] Clear Active Task',
     taskChangeState: '[task] Change State',

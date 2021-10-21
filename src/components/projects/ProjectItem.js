@@ -2,7 +2,7 @@ import {useDispatch} from 'react-redux';
 
 /* Importaciones propias */
 import {projectSetActive} from '../../actions/project';
-import {taskClearActive, taskGetByProject} from '../../actions/task';
+import {taskClearActive, taskStartLoad} from '../../actions/task';
 
 export const ProjectItem = ({project}) => {
     const dispatch = useDispatch();
@@ -16,7 +16,7 @@ export const ProjectItem = ({project}) => {
         dispatch(projectSetActive(project));
 
         /* Obtener tareas del proyecto activado */
-        dispatch(taskGetByProject(project.id));
+        dispatch(taskStartLoad(project.uid));
     }
 
     return (

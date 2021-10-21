@@ -14,12 +14,6 @@ export const taskClearActive = () => ({
     type: types.taskClearActive
 });
 
-/* Obtener tareas de un proyecto */
-export const taskGetByProject = (projectId) => ({
-    type: types.taskGetByProject,
-    payload: projectId
-});
-
 /* Cambiar estado de la tarea */
 export const taskChangeState = (task) => ({
     type: types.taskChangeState,
@@ -36,6 +30,12 @@ export const taskAdded = (task) => ({
 export const taskUpdated = (task) => ({
     type: types.taskUpdated,
     payload: task
+});
+
+/* Obtener tareas */
+export const taskLoaded = (tasks) => ({
+    type: types.taskLoaded,
+    payload: tasks
 });
 
 /* Eliminar tarea */
@@ -56,6 +56,28 @@ export const taskStartAdd = (task) => {
                 task.state = data.task.status;
 
                 return dispatch(taskAdded(task));
+            } else {
+                if (data.msg) {
+                    return dispatch(showAlert(data.msg, 'alert-error'));
+                } else {
+                    return dispatch(showAlert(data.errors[0].msg, 'alert-error'));
+                }
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
+/* Obtener tareas - comienzo */
+export const taskStartLoad = (projectId) => {
+    return async (dispatch) => {
+        try {
+            const resp = await fetchWithToken(`task/${projectId}`);
+            const data = await resp.json();
+            // console.log(data);
+            if (data.ok) {
+                return dispatch(taskLoaded(data.tasks));
             } else {
                 if (data.msg) {
                     return dispatch(showAlert(data.msg, 'alert-error'));
