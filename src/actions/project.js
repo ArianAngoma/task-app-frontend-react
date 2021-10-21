@@ -67,3 +67,20 @@ export const projectStartLoad = () => {
         }
     }
 }
+
+/* Eliminar proyecto - comienzo */
+export const projectStartDelete = () => {
+    return async (dispatch, getState) => {
+        const {uid} = getState().project.activeProject;
+        // console.log(uid);
+
+        try {
+            const resp = await fetchWithToken(`project/${uid}`, {}, 'DELETE');
+            const data = await resp.json();
+
+            if (data.ok) return dispatch(projectDeleted());
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}

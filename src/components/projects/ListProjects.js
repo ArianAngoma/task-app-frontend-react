@@ -1,9 +1,9 @@
+import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 /* Importaciones propias */
 import {ProjectItem} from './ProjectItem';
-import {useEffect} from 'react';
 import {projectStartLoad} from '../../actions/project';
 
 export const ListProjects = () => {

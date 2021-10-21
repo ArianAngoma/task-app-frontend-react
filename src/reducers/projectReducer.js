@@ -34,7 +34,7 @@ export const projectReducer = (state = initialState, action) => {
         case types.projectDeleted:
             return {
                 ...state,
-                projects: state.projects.filter(project => (project.id !== state.activeProject.id)),
+                projects: state.projects.filter(project => (project.uid !== state.activeProject.uid)),
                 activeProject: null
             }
         /* Cargar proyectos */

@@ -3,7 +3,7 @@ import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 /* Importaciones propias */
 import {TaskItem} from './TaskItem';
-import {projectDeleted} from '../../actions/project';
+import {projectStartDelete} from '../../actions/project';
 
 export const ListTasks = () => {
     const dispatch = useDispatch();
@@ -18,7 +18,8 @@ export const ListTasks = () => {
 
     /* Eliminar proyecto */
     const handleDeleteProject = () => {
-        dispatch(projectDeleted());
+        /*dispatch(projectDeleted());*/
+        dispatch(projectStartDelete());
     }
 
     return (
