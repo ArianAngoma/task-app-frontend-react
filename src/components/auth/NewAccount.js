@@ -1,48 +1,53 @@
 import {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+
+/* Importaciones propias */
+import {useForm} from '../../hooks/useForm';
+import {showAlert} from '../../actions/alert';
+
+/* Estado inicial del formulario */
+const initialStateForm = {
+    name: '',
+    email: '',
+    password: '',
+    confirm: ''
+}
 
 export const NewAccount = () => {
-    /* State para registro de nuevo usuario */
-    const [user, setUser] = useState({
-        name: '',
-        email: '',
-        password: '',
-        confirm: ''
-    });
-    /* Extraer campos de user */
-    const {name, email, password, confirm} = user;
+    const dispatch = useDispatch();
 
-    const handleOnChange = (e) => {
-        setUser({
-            ...user,
-            [e.target.name]: e.target.value
-        });
-    };
+    /* Store de alert */
+    const {alertOpen, alert} = useSelector(state => state.alert);
+
+    /* Hook para manejar el estado del fomulario de registro */
+    const [formRegisterValues, handleInputChange] = useForm(initialStateForm)
+    const {name, email, password, confirm} = formRegisterValues;
 
     /* Registro de nuevo usuario */
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        /*/!* Validar que no haya campos vacios *!/
-        if ((name.trim() || email.trim() || password.trim() || confirm.trim()) === '') return showAlert('Todos los campos son obligatorios', 'alerts-error');
+        /* Valida que no haya campos vacios */
+        if (!name.length || !email.length || !password.length || !confirm.length) return dispatch(showAlert('Todos los campos son obligatorios', 'alert-error'));
 
-        /!* Valida si password tiene 6 caracteres *!/
-        if (password.length < 6) return showAlert('El password debe ser de al menos 6 caracteres', 'alerts-error');
+        /* Valida si password tiene 6 caracteres */
+        if (password.length < 6) return dispatch(showAlert('El password debe ser de al menos 6 caracteres', 'alert-error'));
 
-        /!* Valida si password son iguales *!/
-        if (password !== confirm) return showAlert('Los passwords no son iguales', 'alerts-error');*/
+        /* Valida si password son iguales */
+        if (password !== confirm) return dispatch(showAlert('Los passwords no son iguales', 'alert-error'));
     };
 
     return (
         <div className="form-user">
 
-           {/* {
-                (alert) && (
+            {
+                (alertOpen) && (
                     <div className={`alert ${alert.category}`}>
                         {alert.msg}
                     </div>
                 )
-            }*/}
+            }
 
             <div className="container-form shadow-dark">
                 <h1>Obtener una cuenta</h1>
@@ -55,7 +60,7 @@ export const NewAccount = () => {
                                name="name"
                                placeholder="Tu nombre"
                                value={name}
-                               onChange={handleOnChange}/>
+                               onChange={handleInputChange}/>
                     </div>
 
                     <div className="field-form">
@@ -65,7 +70,7 @@ export const NewAccount = () => {
                                name="email"
                                placeholder="Tu email"
                                value={email}
-                               onChange={handleOnChange}/>
+                               onChange={handleInputChange}/>
                     </div>
 
                     <div className="field-form">
@@ -75,7 +80,7 @@ export const NewAccount = () => {
                                name="password"
                                placeholder="Tu password"
                                value={password}
-                               onChange={handleOnChange}/>
+                               onChange={handleInputChange}/>
                     </div>
 
                     <div className="field-form">
@@ -85,7 +90,7 @@ export const NewAccount = () => {
                                name="confirm"
                                placeholder="Repite tu password"
                                value={confirm}
-                               onChange={handleOnChange}/>
+                               onChange={handleInputChange}/>
                     </div>
 
                     <div className="field-form">

@@ -26,6 +26,9 @@ export const AppRouter = () => {
         dispatch(startChecking());
     }, [dispatch]);
 
+    /* Loading */
+    if (checking) return null;
+
     return (
         <Router>
             <div>
