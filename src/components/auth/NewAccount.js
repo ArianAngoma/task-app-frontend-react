@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 /* Importaciones propias */
 import {useForm} from '../../hooks/useForm';
 import {showAlert} from '../../actions/alert';
+import {startRegister} from '../../actions/auth';
 
 /* Estado inicial del formulario */
 const initialStateForm = {
@@ -35,6 +36,9 @@ export const NewAccount = () => {
 
         /* Valida si password son iguales */
         if (password !== confirm) return dispatch(showAlert('Los passwords no son iguales', 'alert-error'));
+
+        /* Registrar usuario */
+        dispatch(startRegister(name, email, password));
     };
 
     return (
