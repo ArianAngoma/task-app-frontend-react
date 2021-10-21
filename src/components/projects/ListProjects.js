@@ -1,10 +1,19 @@
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {CSSTransition, TransitionGroup} from 'react-transition-group';
 
 /* Importaciones propias */
 import {ProjectItem} from './ProjectItem';
+import {useEffect} from 'react';
+import {projectStartLoad} from '../../actions/project';
 
 export const ListProjects = () => {
+    const dispatch = useDispatch();
+
+    /* Obtener todos los proyectos al cargar el componente */
+    useEffect(() => {
+        dispatch(projectStartLoad());
+    }, [dispatch]);
+
     /* Leer state de proyectos */
     const {projects} = useSelector(state => state.project);
 

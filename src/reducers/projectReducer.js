@@ -37,6 +37,12 @@ export const projectReducer = (state = initialState, action) => {
                 projects: state.projects.filter(project => (project.id !== state.activeProject.id)),
                 activeProject: null
             }
+        /* Cargar proyectos */
+        case types.projectLoaded:
+            return {
+                ...state,
+                projects: [...action.payload]
+            }
         default:
             return state;
     }

@@ -24,6 +24,12 @@ export const projectDeleted = () => ({
     type: types.projectDeleted
 });
 
+/* Obtener proyectos */
+export const projectLoaded = (projects) => ({
+    type: types.projectLoaded,
+    payload: projects
+});
+
 /* Agregar nuevo proyecto - comienzo */
 export const projectStartAdd = (project) => {
     return async (dispatch) => {
@@ -33,7 +39,29 @@ export const projectStartAdd = (project) => {
             const data = await resp.json();
             // console.log(data);
 
-            if (data.ok) return dispatch(projectAdded(project));
+            if (data.ok) {
+                /* Se hace esto para que se añada al estore con los datos necesarios */
+                project.creator = data.project.creator;
+                project.created = data.project.created;
+                project.uid = data.project.uid;
+
+                dispatch(projectAdded(project))
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
+/* Obtener proyectos - comienzo */
+export const projectStartLoad = () => {
+    return async (dispatch) => {
+        try {
+            const resp = await fetchWithToken('project');
+            const data = await resp.json();
+            // console.log(data);
+
+            dispatch(projectLoaded(data.projects));
         } catch (e) {
             console.log(e);
         }

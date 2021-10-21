@@ -8,6 +8,7 @@ export const types = {
 
     projectSetActive: '[project] Set Active',
     projectClearActive: '[project] Clear Active Project',
+    projectLoaded: '[project] Project Loaded',
     projectAdded: '[project] Project Added',
     projectDeleted: '[project] Project Deleted',
 
