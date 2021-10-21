@@ -21,16 +21,6 @@ export const taskReducer = (state = initialState, action) => {
                 ...state,
                 activeTask: null
             }
-        /* Cambiar estado de la tarea */
-        case types.taskChangeState:
-            return {
-                ...state,
-                tasksProject: state.tasksProject.map(task =>
-                    (task.uid === action.payload.uid)
-                        ? action.payload
-                        : task
-                )
-            }
         /* Agregar nueva tarea */
         case types.taskAdded:
             return {
@@ -42,7 +32,7 @@ export const taskReducer = (state = initialState, action) => {
             return {
                 ...state,
                 tasksProject: state.tasksProject.map(task =>
-                    (task.id === action.payload.id)
+                    (task.uid === action.payload.uid)
                         ? action.payload
                         : task
                 )

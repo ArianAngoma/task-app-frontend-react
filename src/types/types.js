@@ -15,7 +15,6 @@ export const types = {
     taskLoaded: '[task] Task Loaded',
     taskSetActive: '[task] Set Active',
     taskClearActive: '[task] Clear Active Task',
-    taskChangeState: '[task] Change State',
     taskAdded: '[task] Task Added',
     taskUpdated: '[task] Task Updated',
     taskDeleted: '[task} Task Deleted',

@@ -14,12 +14,6 @@ export const taskClearActive = () => ({
     type: types.taskClearActive
 });
 
-/* Cambiar estado de la tarea */
-export const taskChangeState = (task) => ({
-    type: types.taskChangeState,
-    payload: task
-});
-
 /* Agregar nueva tarea */
 export const taskAdded = (task) => ({
     type: types.taskAdded,
@@ -99,6 +93,27 @@ export const taskStartDelete = (taskId) => {
             const data = await resp.json();
 
             if (data.ok) return dispatch(taskDeleted(taskId));
+            else {
+                if (data.msg) {
+                    return dispatch(showAlert(data.msg, 'alert-error'));
+                } else {
+                    return dispatch(showAlert(data.errors[0].msg, 'alert-error'));
+                }
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    }
+}
+
+/* Actualizar tarea - comienzo */
+export const taskStartUpdate = (task) => {
+    return async (dispatch) => {
+        try {
+            const resp = await fetchWithToken(`task/${task.uid}`, task, 'PUT');
+            const data = await resp.json();
+
+            if (data.ok) return dispatch(taskUpdated(task));
             else {
                 if (data.msg) {
                     return dispatch(showAlert(data.msg, 'alert-error'));

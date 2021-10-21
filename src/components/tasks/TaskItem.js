@@ -1,7 +1,7 @@
 import {useDispatch} from 'react-redux';
 
 /* Importaciones propias */
-import {taskChangeState, taskClearActive, taskSetActive, taskStartDelete} from '../../actions/task';
+import {taskClearActive, taskSetActive, taskStartDelete, taskStartUpdate} from '../../actions/task';
 
 export const TaskItem = ({task}) => {
     const dispatch = useDispatch();
@@ -18,8 +18,10 @@ export const TaskItem = ({task}) => {
 
     /* Modificar el estado de la tarea */
     const handleChangeStateTask = () => {
-        task.state = !task.state;
-        dispatch(taskChangeState(task));
+        task.status = !task.status;
+
+        /* Actualizar tarea */
+        dispatch(taskStartUpdate(task));
     }
 
     /* Activa la tarea */
@@ -33,7 +35,7 @@ export const TaskItem = ({task}) => {
 
             <div className="state">
                 {
-                    (task.state)
+                    (task.status)
                         ? (<button type="button"
                                    className="complete"
                                    onClick={handleChangeStateTask}>Completado</button>)

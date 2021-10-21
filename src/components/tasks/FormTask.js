@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 /* Importaciones propias */
 import {useForm} from '../../hooks/useForm';
-import {taskClearActive, taskStartAdd, taskUpdated} from '../../actions/task';
+import {taskClearActive, taskStartAdd, taskStartUpdate} from '../../actions/task';
 import {uiCloseErrorTask, uiOpenErrorTask} from '../../actions/ui';
 
 /* Estado inicial del formulario */
@@ -55,10 +55,12 @@ export const FormTask = () => {
         } else {
             // console.log({...formTaskValues})
 
-            /* Edita la tarea activa */
-            dispatch(taskUpdated({
+            /*dispatch(taskUpdated({
                 ...formTaskValues
-            }));
+            }));*/
+
+            /* Edita la tarea activa */
+            dispatch(taskStartUpdate({...formTaskValues}));
 
             /* Limpiar la tarea activa */
             dispatch(taskClearActive());
