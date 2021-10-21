@@ -126,3 +126,8 @@ export const taskStartUpdate = (task) => {
         }
     }
 }
+
+/* Limpiar store de tareas */
+export const taskLogout = () => ({
+    type: types.taskLogout
+});

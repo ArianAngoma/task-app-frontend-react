@@ -2,6 +2,8 @@
 import {fetchNoToken, fetchWithToken} from '../helpers/fetch';
 import {types} from '../types/types';
 import {saveData} from '../helpers/save-data';
+import {taskLogout} from './task';
+import {projectLogout} from './project';
 
 /* Inicio de sesión - comienzo */
 export const startLogin = (email, password) => {
@@ -54,4 +56,24 @@ export const startRegister = (name, email, password) => {
         await saveData(data, dispatch);
     }
 }
+
+/* Logout de usuario - comienzo */
+export const startLogout = () => {
+    return (dispatch) => {
+        localStorage.clear();
+
+        /* Limpiar store */
+        dispatch(taskLogout());
+        dispatch(projectLogout());
+
+
+        /* Logout */
+        dispatch(logout());
+    }
+}
+
+/* Logout de usuario */
+export const logout = () => ({
+    type: types.authLogout
+});
 

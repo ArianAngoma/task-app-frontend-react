@@ -49,6 +49,11 @@ export const taskReducer = (state = initialState, action) => {
                 ...state,
                 tasksProject: [...action.payload]
             }
+        /* Limpiar store de tareas */
+        case types.taskLogout:
+            return {
+                ...initialState
+            }
         default:
             return state;
     }

@@ -106,3 +106,8 @@ export const projectStartDelete = () => {
         }
     }
 }
+
+/* Limpiar store de proyectos */
+export const projectLogout = () => ({
+    type: types.projectLogout
+});

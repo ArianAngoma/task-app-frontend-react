@@ -11,6 +11,7 @@ export const types = {
     projectLoaded: '[project] Project Loaded',
     projectAdded: '[project] Project Added',
     projectDeleted: '[project] Project Deleted',
+    projectLogout: '[project] Clear Projects Logout',
 
     taskLoaded: '[task] Task Loaded',
     taskSetActive: '[task] Set Active',
@@ -18,11 +19,12 @@ export const types = {
     taskAdded: '[task] Task Added',
     taskUpdated: '[task] Task Updated',
     taskDeleted: '[task} Task Deleted',
+    taskLogout: '[task] Clear Tasks Logout',
+
+    alertOpen: '[alert] Open',
+    alertClose: '[alert] Close',
 
     authCheckingFinish: '[auth] Finish Checking Login State',
     authLogin: '[auth] Login',
-    authLogout: '[auth] Logout',
-
-    alertOpen: '[alert] Open',
-    alertClose: '[alert] Close'
+    authLogout: '[auth] Logout'
 }

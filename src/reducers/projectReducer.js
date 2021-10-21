@@ -43,6 +43,11 @@ export const projectReducer = (state = initialState, action) => {
                 ...state,
                 projects: [...action.payload]
             }
+        /* Limpiar store de proyectos */
+        case types.projectLogout:
+            return {
+                ...initialState
+            }
         default:
             return state;
     }
